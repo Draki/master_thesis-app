@@ -1,0 +1,1292 @@
+{
+    "_id" : NumberInt(1001),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T20:07:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "CARAMELOS S/AZUCAR"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1002),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T15:25:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 3.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOSTA VARIADA"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "BAGUETTE TORTILLA"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1003),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T20:07:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.83,
+            "n_unit" : NumberInt(1),
+            "desc" : "QUESO TIERNO MEZCL"
+        },
+        {
+            "net_am" : 1.65,
+            "n_unit" : NumberInt(1),
+            "desc" : "GUISANTES MUY FINO"
+        },
+        {
+            "net_am" : 1.77,
+            "n_unit" : NumberInt(1),
+            "desc" : "BIFIDUS CON FRUTAS"
+        },
+        {
+            "net_am" : 1.16,
+            "n_unit" : NumberInt(1),
+            "desc" : "MAIZ DULCE PACK3X140"
+        },
+        {
+            "net_am" : 2.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "SANUS FRESA L. CASEI"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "FANTA LIMÓN S/BURB"
+        },
+        {
+            "net_am" : 1.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "CEREALES ESTRELLITAS"
+        },
+        {
+            "net_am" : 2.15,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALVASLIP EVAX"
+        },
+        {
+            "net_am" : 1.09,
+            "n_unit" : NumberInt(1),
+            "desc" : "YOGUR NATURAL DANO"
+        },
+        {
+            "net_am" : 1.15,
+            "n_unit" : NumberInt(1),
+            "desc" : "ARROZ LARGO SOS 1 KI"
+        },
+        {
+            "net_am" : 1.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "YORK SANDWICH ELPO"
+        },
+        {
+            "net_am" : 0.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "BARQUILLO NATA COVY"
+        },
+        {
+            "net_am" : 1.39,
+            "n_unit" : NumberInt(1),
+            "desc" : "TRINA LIMON 1,5LITRO"
+        },
+        {
+            "net_am" : 1.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHORIZO DULCE CARR"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIMIENTO PIQUILLO"
+        },
+        {
+            "net_am" : 6.0,
+            "n_unit" : NumberInt(24),
+            "desc" : "CERVEZA HOLANDESA"
+        },
+        {
+            "net_am" : 1.34,
+            "n_unit" : NumberInt(1),
+            "desc" : "PECHUGA PAVO LONCH"
+        },
+        {
+            "net_am" : 1.52,
+            "n_unit" : NumberInt(6),
+            "desc" : "AGUA CARREFOUR 2 L"
+        },
+        {
+            "net_am" : 1.69,
+            "n_unit" : NumberInt(1),
+            "desc" : "FIAMBRE JAMON PAVO"
+        },
+        {
+            "net_am" : 0.66,
+            "n_unit" : NumberInt(1),
+            "desc" : "BIFIDUS COCO 0%"
+        },
+        {
+            "net_am" : 2.74,
+            "n_unit" : NumberInt(1),
+            "desc" : "DUPLO COLGATE TRIP"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1004),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T16:25:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 0.64,
+            "n_unit" : NumberInt(1),
+            "desc" : "AGUA SOLAN CABRAS"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1005),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T14:25:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 3.9,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAQUETE 500 HOJAS A4"
+        },
+        {
+            "net_am" : 4.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "LEGGING NINA 3/14"
+        },
+        {
+            "net_am" : 9.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "JERSEY UNISEX 3/14"
+        },
+        {
+            "net_am" : 4.6,
+            "n_unit" : NumberInt(3),
+            "desc" : "HUESITOS LECHE 12"
+        },
+        {
+            "net_am" : 2.65,
+            "n_unit" : NumberInt(1),
+            "desc" : "MINI FUET CAMPOFRIO"
+        },
+        {
+            "net_am" : 2.78,
+            "n_unit" : NumberInt(2),
+            "desc" : "REGAÑA ACEITE OLIV"
+        },
+        {
+            "net_am" : 15.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "MEGA MAKI"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1006),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T12:25:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 0.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "BOLSA RAFIA CARREFOU"
+        },
+        {
+            "net_am" : 59.25,
+            "n_unit" : NumberInt(15),
+            "desc" : "LIBRO D INFANTIL"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1007),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T23:07:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 9.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "JAMONERO COLUMNA"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1008),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T12:24:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 12.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "ANTIARRUGAS HYDREA"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1009),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T22:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.65,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHULETA LOMO EXTRATI"
+        },
+        {
+            "net_am" : 5.4,
+            "n_unit" : NumberInt(2),
+            "desc" : "DESODORANTE HENO"
+        },
+        {
+            "net_am" : 1.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "7 AJAX ESTROPAJO JAB"
+        },
+        {
+            "net_am" : 0.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "LOCIÓN CORPORAL"
+        },
+        {
+            "net_am" : 7.4,
+            "n_unit" : NumberInt(2),
+            "desc" : "LOCIÓN INTENSIVA"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1010),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T22:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.7,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALSA PESTO GENOVE"
+        },
+        {
+            "net_am" : 0.62,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOMATE PERA"
+        },
+        {
+            "net_am" : 1.27,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANZANA GOLDEN"
+        },
+        {
+            "net_am" : 1.4,
+            "n_unit" : NumberInt(1),
+            "desc" : "LIMON"
+        },
+        {
+            "net_am" : 1.69,
+            "n_unit" : NumberInt(1),
+            "desc" : "CALABAZA SEPALLO"
+        },
+        {
+            "net_am" : 2.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "JAMÓN COCIDO S/FOS"
+        },
+        {
+            "net_am" : 4.77,
+            "n_unit" : NumberInt(1),
+            "desc" : "LOMO SALMÓN"
+        },
+        {
+            "net_am" : 4.38,
+            "n_unit" : NumberInt(1),
+            "desc" : "PECHUGA ENTERA CORRA"
+        },
+        {
+            "net_am" : 1.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "MASA BRISA LA COCI"
+        },
+        {
+            "net_am" : 1.78,
+            "n_unit" : NumberInt(1),
+            "desc" : "JUDIAS VERDES EXTR"
+        },
+        {
+            "net_am" : 1.8,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOALLITAS P/ATOPIC"
+        },
+        {
+            "net_am" : 1.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "GEL AVENA PIEL SENSI"
+        },
+        {
+            "net_am" : 2.24,
+            "n_unit" : NumberInt(2),
+            "desc" : "LEJIA WC 2X40 G"
+        },
+        {
+            "net_am" : 1.28,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOALLITAS JOHNSONS"
+        },
+        {
+            "net_am" : 3.1,
+            "n_unit" : NumberInt(1),
+            "desc" : "RISTORANTE FORMAGGI"
+        },
+        {
+            "net_am" : 2.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "LOCIÓN CORPORAL"
+        },
+        {
+            "net_am" : 8.73,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAÑAL DODOT AZUL T4"
+        },
+        {
+            "net_am" : 2.89,
+            "n_unit" : NumberInt(1),
+            "desc" : "CEREALES ALL BRAN"
+        },
+        {
+            "net_am" : 7.4,
+            "n_unit" : NumberInt(2),
+            "desc" : "SCOTTEX X9ACOLCHAD"
+        },
+        {
+            "net_am" : 8.0,
+            "n_unit" : NumberInt(2),
+            "desc" : "CAFE TASSIMO COLOM"
+        },
+        {
+            "net_am" : 19.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "CARGADOR POWER FUS"
+        },
+        {
+            "net_am" : 1.46,
+            "n_unit" : NumberInt(1),
+            "desc" : "SPAGUETTI BARILLA"
+        },
+        {
+            "net_am" : 2.35,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALSA BOLOÑESA QUESO"
+        },
+        {
+            "net_am" : 1.73,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALSA PESTO GALLO"
+        },
+        {
+            "net_am" : 9.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOALLITAS DODOT"
+        },
+        {
+            "net_am" : 4.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "ALMENDRA COMUN FRITA"
+        },
+        {
+            "net_am" : 1.88,
+            "n_unit" : NumberInt(1),
+            "desc" : "PATATAS LAYS GOURM"
+        },
+        {
+            "net_am" : 2.19,
+            "n_unit" : NumberInt(1),
+            "desc" : "TENN BAÑO 1,4 LITR"
+        },
+        {
+            "net_am" : 3.74,
+            "n_unit" : NumberInt(3),
+            "desc" : "CREMA CHOCOLATE"
+        },
+        {
+            "net_am" : 4.3,
+            "n_unit" : NumberInt(1),
+            "desc" : "QUESO EL VENTERO"
+        },
+        {
+            "net_am" : 3.7,
+            "n_unit" : NumberInt(1),
+            "desc" : "ARROZ BOMBA SOS 1 KG"
+        },
+        {
+            "net_am" : 3.1,
+            "n_unit" : NumberInt(1),
+            "desc" : "LOMO ADOBADO IBÉRI"
+        },
+        {
+            "net_am" : 7.0,
+            "n_unit" : NumberInt(2),
+            "desc" : "DESODORANTE ROYAL"
+        },
+        {
+            "net_am" : 1.54,
+            "n_unit" : NumberInt(1),
+            "desc" : "BANDERILLAS RIOVER"
+        },
+        {
+            "net_am" : 5.98,
+            "n_unit" : NumberInt(1),
+            "desc" : "CERVEZA MAHOU CLAS"
+        },
+        {
+            "net_am" : 1.59,
+            "n_unit" : NumberInt(1),
+            "desc" : "HUEVOS CAMPEROS 6"
+        },
+        {
+            "net_am" : 1.49,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAN SANDWICH NATUR"
+        },
+        {
+            "net_am" : 2.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "VOL AU VENT 6 UND"
+        },
+        {
+            "net_am" : 5.0,
+            "n_unit" : NumberInt(2),
+            "desc" : "BABY BOL 300ML"
+        },
+        {
+            "net_am" : 1.67,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHOCOLATE C/LECHE"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIMIENTO PIQUILLO"
+        },
+        {
+            "net_am" : 3.6,
+            "n_unit" : NumberInt(6),
+            "desc" : "LECHE SEMI. CARREF"
+        },
+        {
+            "net_am" : 1.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "ACEITUNAS GORDA"
+        },
+        {
+            "net_am" : 0.8,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALSA NAPOLITANA"
+        },
+        {
+            "net_am" : 0.8,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALSA PIAMONTESA"
+        },
+        {
+            "net_am" : 1.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "BROTES DELUXE"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1011),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T23:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 7.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "JAMÓN IBÉRICO CEBO"
+        },
+        {
+            "net_am" : 2.33,
+            "n_unit" : NumberInt(1),
+            "desc" : "QUESO PECORINO PRI"
+        },
+        {
+            "net_am" : 8.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "TARTA SELVA NEGRA"
+        },
+        {
+            "net_am" : 5.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "CAM MC STRASS WP"
+        },
+        {
+            "net_am" : 13.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIJAMA PTO ML SRA"
+        },
+        {
+            "net_am" : 5.45,
+            "n_unit" : NumberInt(1),
+            "desc" : "GENMAI CRISTAL MAKI"
+        },
+        {
+            "net_am" : 2.12,
+            "n_unit" : NumberInt(2),
+            "desc" : "LECHE S/LACTOSA 1 L."
+        },
+        {
+            "net_am" : 0.45,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAN PISTOLA/BARRA"
+        },
+        {
+            "net_am" : 0.1,
+            "n_unit" : NumberInt(2),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 2.45,
+            "n_unit" : NumberInt(1),
+            "desc" : "VINO EMILIA IGT RO"
+        },
+        {
+            "net_am" : 7.1,
+            "n_unit" : NumberInt(1),
+            "desc" : "CRUNCH CALI ROLL"
+        },
+        {
+            "net_am" : 3.1,
+            "n_unit" : NumberInt(1),
+            "desc" : "MAKI PEPINO KELLYD"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "SET VELAS NUMERO 0"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "SET VELAS NUMERO 5"
+        },
+        {
+            "net_am" : 7.9,
+            "n_unit" : NumberInt(2),
+            "desc" : "BOUQUET FLOR"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1012),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T22:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.01,
+            "n_unit" : NumberInt(1),
+            "desc" : "MINI STICKS FUET"
+        },
+        {
+            "net_am" : 2.2,
+            "n_unit" : NumberInt(1),
+            "desc" : "VINO VIÑA ALBALI"
+        },
+        {
+            "net_am" : 3.6,
+            "n_unit" : NumberInt(6),
+            "desc" : "LECHE SEMI. CARREF"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1013),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T20:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANZANA GOLDEN"
+        },
+        {
+            "net_am" : 1.92,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOMATE ENSALADA"
+        },
+        {
+            "net_am" : 4.46,
+            "n_unit" : NumberInt(1),
+            "desc" : "HUEVA MERLUZA"
+        },
+        {
+            "net_am" : 5.98,
+            "n_unit" : NumberInt(1),
+            "desc" : "GAMBON CONGELADO"
+        },
+        {
+            "net_am" : 2.98,
+            "n_unit" : NumberInt(1),
+            "desc" : "GAMBA GORDA PINK"
+        },
+        {
+            "net_am" : 1.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "REPOLLO RIZADO"
+        },
+        {
+            "net_am" : 1.02,
+            "n_unit" : NumberInt(1),
+            "desc" : "PEPINO ESPAÑOL CAM"
+        },
+        {
+            "net_am" : 4.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "POLLO ENTERO LIMPIO"
+        },
+        {
+            "net_am" : 9.25,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAPEL HIGIENICOx32"
+        },
+        {
+            "net_am" : 0.83,
+            "n_unit" : NumberInt(1),
+            "desc" : "FIDEO CABELLÍN CARRE"
+        },
+        {
+            "net_am" : 0.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIMIENTO PIQUILLO"
+        },
+        {
+            "net_am" : 0.82,
+            "n_unit" : NumberInt(2),
+            "desc" : "TOMATE TRITURADO CRF"
+        },
+        {
+            "net_am" : 0.93,
+            "n_unit" : NumberInt(1),
+            "desc" : "QUESO UNTAR NATURAL"
+        },
+        {
+            "net_am" : 9.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "PACK 2 PELELES"
+        },
+        {
+            "net_am" : 4.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHAQUETA C/CREMALL"
+        },
+        {
+            "net_am" : 4.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "CAMISA ML VILLELA"
+        },
+        {
+            "net_am" : 8.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "CAMISETA SKY MUJER"
+        },
+        {
+            "net_am" : 8.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "CAMISETA SKY MUJER"
+        },
+        {
+            "net_am" : 9.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "JERSEY CRO C/BOTON"
+        },
+        {
+            "net_am" : 1.04,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAPEL COCINA XXL MAX"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "SERVILLETAS 30X30CM"
+        },
+        {
+            "net_am" : 2.69,
+            "n_unit" : NumberInt(1),
+            "desc" : "GALLETAS DORADA"
+        },
+        {
+            "net_am" : 1.74,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHOCOLATE NESTLE"
+        },
+        {
+            "net_am" : 1.11,
+            "n_unit" : NumberInt(1),
+            "desc" : "KETCHUP ORIGINAL"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "YOGUR BIO C/FRUTAS"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "ACTIVIA C/MANGO X4"
+        },
+        {
+            "net_am" : 6.87,
+            "n_unit" : NumberInt(1),
+            "desc" : "DANACOL NATURAL X 14"
+        },
+        {
+            "net_am" : 0.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "AZUCAR BOLSA PAPEL"
+        },
+        {
+            "net_am" : 0.41,
+            "n_unit" : NumberInt(1),
+            "desc" : "SAL GORDA ROCA 1KG"
+        },
+        {
+            "net_am" : 1.52,
+            "n_unit" : NumberInt(1),
+            "desc" : "ARROZ SOS REDONDO 1"
+        },
+        {
+            "net_am" : 0.2,
+            "n_unit" : NumberInt(1),
+            "desc" : "SAL FINA MESA CARR"
+        },
+        {
+            "net_am" : 3.6,
+            "n_unit" : NumberInt(6),
+            "desc" : "LECHE ENTERA CARRE"
+        },
+        {
+            "net_am" : 4.4,
+            "n_unit" : NumberInt(3),
+            "desc" : "ATÚN CLARO ACEITE"
+        },
+        {
+            "net_am" : 1.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "QUESO FRESCO BURGO"
+        },
+        {
+            "net_am" : 3.0,
+            "n_unit" : NumberInt(2),
+            "desc" : "MEJILLÓN  ESCABECH"
+        },
+        {
+            "net_am" : 0.25,
+            "n_unit" : NumberInt(5),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 1.25,
+            "n_unit" : NumberInt(1),
+            "desc" : "LENTEJA PARDINA 1 KG"
+        },
+        {
+            "net_am" : 0.55,
+            "n_unit" : NumberInt(1),
+            "desc" : "PEREJIL MANOJO"
+        },
+        {
+            "net_am" : 1.39,
+            "n_unit" : NumberInt(1),
+            "desc" : "CORAZON LECHUGA"
+        },
+        {
+            "net_am" : 0.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIMIENTO ITALIANO"
+        },
+        {
+            "net_am" : 1.98,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANDARINA MALLA 2"
+        },
+        {
+            "net_am" : 3.9,
+            "n_unit" : NumberInt(1),
+            "desc" : "NARANJA SACO 6KG"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1014),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T20:06:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.12,
+            "n_unit" : NumberInt(2),
+            "desc" : "ZUMO NARANJA CARRE"
+        },
+        {
+            "net_am" : 3.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "6 PILAS LR06 CRF"
+        },
+        {
+            "net_am" : 1.9,
+            "n_unit" : NumberInt(2),
+            "desc" : "JAMON TAQUITOS 65 GR"
+        },
+        {
+            "net_am" : 1.63,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAN BIMBO CORTEZA"
+        },
+        {
+            "net_am" : 0.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAN TOSTADO NATURA"
+        },
+        {
+            "net_am" : 5.98,
+            "n_unit" : NumberInt(2),
+            "desc" : "ACEITE OLIVA CARREFO"
+        },
+        {
+            "net_am" : 0.49,
+            "n_unit" : NumberInt(1),
+            "desc" : "VINAGRE VINO BLANC"
+        },
+        {
+            "net_am" : 2.85,
+            "n_unit" : NumberInt(1),
+            "desc" : "BURGUER VACUNO"
+        },
+        {
+            "net_am" : 1.55,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAN SUPER HAMBURGU"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1015),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T21:05:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.53,
+            "n_unit" : NumberInt(1),
+            "desc" : "COSTILLA IBÉRICA"
+        },
+        {
+            "net_am" : 1.63,
+            "n_unit" : NumberInt(1),
+            "desc" : "COSTILLA IBÉRICA"
+        },
+        {
+            "net_am" : 3.76,
+            "n_unit" : NumberInt(1),
+            "desc" : "PECHUGA PAVO ADOBADA"
+        },
+        {
+            "net_am" : 1.26,
+            "n_unit" : NumberInt(1),
+            "desc" : "PURE PATATAS C/LECHE"
+        },
+        {
+            "net_am" : 3.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "RAZA PEQUEÑA 1,5KG"
+        },
+        {
+            "net_am" : 22.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "BREKKIES EXCEL 15KG"
+        },
+        {
+            "net_am" : 0.68,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALAQUESO VELARTE"
+        },
+        {
+            "net_am" : 0.05,
+            "n_unit" : NumberInt(1),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 2.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "FIDEUA 350 GRAMOS"
+        },
+        {
+            "net_am" : 4.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "ARROZ 3 DELICIAS"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1016),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T23:05:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.39,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAYES GRANDE"
+        },
+        {
+            "net_am" : 0.05,
+            "n_unit" : NumberInt(1),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 3.9,
+            "n_unit" : NumberInt(1),
+            "desc" : "NARANJA SACO 6KG"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1017),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T19:05:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 11.97,
+            "n_unit" : NumberInt(3),
+            "desc" : "2 CALCETINES UNISEX"
+        },
+        {
+            "net_am" : 11.88,
+            "n_unit" : NumberInt(1),
+            "desc" : "PRESERVATIVO DUREX"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1018),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T22:04:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.56,
+            "n_unit" : NumberInt(1),
+            "desc" : "GALLETA PRINCIPE"
+        },
+        {
+            "net_am" : 1.56,
+            "n_unit" : NumberInt(3),
+            "desc" : "CERVEZA MAHOU CLAS"
+        },
+        {
+            "net_am" : 0.39,
+            "n_unit" : NumberInt(1),
+            "desc" : "BAGUETTE CARREFOUR"
+        },
+        {
+            "net_am" : 0.32,
+            "n_unit" : NumberInt(1),
+            "desc" : "AGUA CARREFOUR 1,5"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1019),
+    "mall" : NumberInt(1),
+    "date" : ISODate("2016-01-14T23:04:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 10.5,
+            "n_unit" : NumberInt(1),
+            "desc" : "JAMÓN IBÉRICO BELL"
+        },
+        {
+            "net_am" : 5.92,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHULETÓN BUEY CORT"
+        },
+        {
+            "net_am" : 5.55,
+            "n_unit" : NumberInt(1),
+            "desc" : "CERVEZA 1906 9 X25"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANDARINA 1,5 KG"
+        },
+        {
+            "net_am" : 3.15,
+            "n_unit" : NumberInt(1),
+            "desc" : "MEZCLA GOURMET MAX"
+        },
+        {
+            "net_am" : 0.05,
+            "n_unit" : NumberInt(1),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 3.78,
+            "n_unit" : NumberInt(2),
+            "desc" : "TOMATE CHERRY CARREF"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1020),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T20:04:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "NAPOLITANA JAMON"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1021),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T20:04:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.19,
+            "n_unit" : NumberInt(1),
+            "desc" : "TIRA COSTILLA IBÉRIC"
+        },
+        {
+            "net_am" : 2.47,
+            "n_unit" : NumberInt(1),
+            "desc" : "TIRA COSTILLA IBÉRIC"
+        },
+        {
+            "net_am" : 5.5,
+            "n_unit" : NumberInt(2),
+            "desc" : "MANTEQUILLA C/SAL"
+        },
+        {
+            "net_am" : 3.98,
+            "n_unit" : NumberInt(2),
+            "desc" : "PLATO POSTRE SCANDIN"
+        },
+        {
+            "net_am" : 5.0,
+            "n_unit" : NumberInt(2),
+            "desc" : "PLATO HONDO SCANDINA"
+        },
+        {
+            "net_am" : 1.59,
+            "n_unit" : NumberInt(1),
+            "desc" : "ROSCA INTEGRAL/AVE"
+        },
+        {
+            "net_am" : 2.24,
+            "n_unit" : NumberInt(3),
+            "desc" : "ARROZ CALDOSO SOS"
+        },
+        {
+            "net_am" : 2.59,
+            "n_unit" : NumberInt(1),
+            "desc" : "SALCHICHAS FRANKFU"
+        },
+        {
+            "net_am" : 2.7,
+            "n_unit" : NumberInt(1),
+            "desc" : "CERVEZA ESTRELLA GAL"
+        },
+        {
+            "net_am" : 1.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHAMPIÑÓN 300 GR"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1022),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T19:03:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.55,
+            "n_unit" : NumberInt(1),
+            "desc" : "PIÑA CARREFOUR"
+        },
+        {
+            "net_am" : 2.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "OFERTA PESCADERIA"
+        },
+        {
+            "net_am" : 0.97,
+            "n_unit" : NumberInt(1),
+            "desc" : "OFERTA REFRIGERADO"
+        },
+        {
+            "net_am" : 1.88,
+            "n_unit" : NumberInt(1),
+            "desc" : "MAIZ DULCE ECO 2X140"
+        },
+        {
+            "net_am" : 6.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "TINTE DE COLORACION"
+        },
+        {
+            "net_am" : 1.28,
+            "n_unit" : NumberInt(1),
+            "desc" : "TOMATE FRITO ORLANDO"
+        },
+        {
+            "net_am" : 2.7,
+            "n_unit" : NumberInt(1),
+            "desc" : "BEBIDA ARROZ-CANELA"
+        },
+        {
+            "net_am" : 2.6,
+            "n_unit" : NumberInt(1),
+            "desc" : "BEBIDA COCO NATURAL"
+        }
+    ],
+    "client" : NumberLong(77051306567)
+}
+{
+    "_id" : NumberInt(1023),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T21:03:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 1.63,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANDARINA MARCA GR"
+        },
+        {
+            "net_am" : 6.62,
+            "n_unit" : NumberInt(1),
+            "desc" : "POLLO PECHUGA ENTERA"
+        },
+        {
+            "net_am" : 2.75,
+            "n_unit" : NumberInt(1),
+            "desc" : "PAPEL HIGIENICO SCOT"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "TORCIGLIONI SEMOLA"
+        },
+        {
+            "net_am" : 4.95,
+            "n_unit" : NumberInt(1),
+            "desc" : "ACEITE OLIVA CARBO"
+        },
+        {
+            "net_am" : 2.24,
+            "n_unit" : NumberInt(3),
+            "desc" : "ARROZ CALDOSO SOS"
+        },
+        {
+            "net_am" : 1.3,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHEETOS PANDILLA"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "YOGUR BIO C/FRUTAS"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "ACTIVIA 0% MELOCOT"
+        },
+        {
+            "net_am" : 1.99,
+            "n_unit" : NumberInt(1),
+            "desc" : "ACTIVIA C/MANGO X4"
+        },
+        {
+            "net_am" : 1.11,
+            "n_unit" : NumberInt(1),
+            "desc" : "FLOUR TORTILLAS CARR"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
+{
+    "_id" : NumberInt(1024),
+    "mall" : NumberInt(2),
+    "date" : ISODate("2016-01-14T22:03:00.000+0000"),
+    "items" : [
+        {
+            "net_am" : 2.49,
+            "n_unit" : NumberInt(1),
+            "desc" : "MANZANA FUJI"
+        },
+        {
+            "net_am" : 2.0,
+            "n_unit" : NumberInt(1),
+            "desc" : "PECHUGAS PAVO LONCHA"
+        },
+        {
+            "net_am" : 3.63,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHOCOLATINA T2 KINDE"
+        },
+        {
+            "net_am" : 2.3,
+            "n_unit" : NumberInt(1),
+            "desc" : "GALLETA DIGESTIVE"
+        },
+        {
+            "net_am" : 3.8,
+            "n_unit" : NumberInt(1),
+            "desc" : "COLA CAO FIBRA 0%"
+        },
+        {
+            "net_am" : 1.29,
+            "n_unit" : NumberInt(1),
+            "desc" : "CORAZON LECHUGA"
+        },
+        {
+            "net_am" : 0.05,
+            "n_unit" : NumberInt(1),
+            "desc" : "BOLSA CARREFOUR"
+        },
+        {
+            "net_am" : 2.15,
+            "n_unit" : NumberInt(1),
+            "desc" : "CHOCOLATE DULCE LECH"
+        }
+    ],
+    "client" : NumberLong(77021708271)
+}
