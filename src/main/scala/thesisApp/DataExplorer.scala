@@ -16,7 +16,7 @@ import scala.util.parsing.json.JSON
 object DataExplorer {
   def main(args: Array[String]) {
 
-    var baseDir = "./src/main/scala/"
+    var baseDir = "./"
     var configFile = "dataExplorer_sample"
     if (args.length > 0)  baseDir = args(0)
     if (args.length > 1)  configFile = args(1)
@@ -40,14 +40,13 @@ object DataExplorer {
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
     )
     new File(resultsDir).mkdirs()
-    val timeLogPath = resultsDir + "timeLog.json"
+    val timeLogPath = baseDir + "results/timeLog.json"
 
 
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
       .appName(appName)
-      .master("local")
       .getOrCreate()
 
     // Loading modules
@@ -58,7 +57,7 @@ object DataExplorer {
     // Formatting file to the standar JSON format managed by Spark
     var timerModule = System.currentTimeMillis
     val formattedFile = utilities.fileFormatter(readDir, sourceFile, baseDir + "results/")
-    utilities.timeLogger("fileFormatter(.JSON)",numClients, numProds, timerModule, timeLogPath)
+    utilities.timeLogger("fileFormatter(.JSON)", numClients, numProds, timerModule, timeLogPath)
 
     // Loading formatted file as a dataframe table
     val (spartans, clientConverter, clientIndex, productConverter, prodNameIndex) =

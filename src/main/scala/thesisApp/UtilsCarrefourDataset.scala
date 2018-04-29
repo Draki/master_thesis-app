@@ -140,7 +140,7 @@ class UtilsCarrefourDataset() {
       case "parallelWriteJSON" => df.write.mode("append").json(resultsDir + fileName)
       case "oneJSON" =>
         val bw = new BufferedWriter(new FileWriter(new File(resultsDir + fileName + ".json")))
-        try bw.write(df.toJSON.collect()(0))
+        try df.toJSON.collect().foreach(x => bw.write(x+"\n"))
         finally bw.close()
       case "standarOutput" => df.show()
       case _ => sys.error("Please type the right outputMode: \"parallelWriteJSON\"/\"oneJSON\"/\"standarOutput\"\n")

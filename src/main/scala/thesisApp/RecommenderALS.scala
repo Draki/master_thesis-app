@@ -17,7 +17,7 @@ import scala.util.parsing.json.JSON
 object RecommenderALS {
   def main(args: Array[String]) {
 
-    var baseDir = "./src/main/scala/"
+    var baseDir = "./"
     var configFile = "recommenderALS_sample"
     if (args.length > 0)  baseDir = args(0)
     if (args.length > 1)  configFile = args(1)
@@ -41,14 +41,13 @@ object RecommenderALS {
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
     )
     new File(resultsDir).mkdirs()
-    val timeLogPath = resultsDir + "timeLog.json"
+    val timeLogPath = baseDir + "results/timeLog.json"
 
 
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
       .appName(appName)
-      .master("local")
       .getOrCreate()
 
     // Loading modules

@@ -16,7 +16,7 @@ import scala.util.parsing.json.JSON
 object RecommenderGraphX {
   def main(args: Array[String]) {
 
-    var baseDir = "./src/main/scala/"
+    var baseDir = "./"
     var configFile = "recommenderGraphX_sample"
     if (args.length > 0)  baseDir = args(0)
     if (args.length > 1)  configFile = args(1)
@@ -25,7 +25,7 @@ object RecommenderGraphX {
 
     // Loading configuration from file or defaults
     val configMap: Map[String, String] = JSON.parseFull(readDir + configFile) match {
-      case Some(e: Map[String, String]) => e
+      case Some(e: Map[String, String] @unchecked) => e
       case _ => Map()
     }
     val appName = configMap.getOrElse("appName", "RecommenderGraphX")
@@ -43,14 +43,13 @@ object RecommenderGraphX {
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
     )
     new File(resultsDir).mkdirs()
-    val timeLogPath = resultsDir + "timeLog.json"
+    val timeLogPath = baseDir + "results/timeLog.json"
 
 
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
       .appName(appName)
-      .master("local")
       .getOrCreate()
 
     // Loading modules
