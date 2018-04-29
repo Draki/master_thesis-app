@@ -1,0 +1,8 @@
+{"appName": "RecommenderALS",
+  "outputMode": "oneJSON",
+  "outputDir": "oneJSON",
+  "numClients": "10",
+  "numProds": "10",
+  "usersCol": "clientIndex",
+  "itemsCol": "prodNameIndex",
+  "ratingsCol": "prodUds"}

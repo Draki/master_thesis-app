@@ -24,7 +24,7 @@ object RecommenderALS {
     val readDir = baseDir + "data/"
 
 
-    // Loading configuration from file or defaults
+    // Loading common configuration from file or defaults
     val configMap: Map[String, String] = JSON.parseFull(readDir + configFile) match {
       case Some(e: Map[String, String]) => e
       case _ => Map()
@@ -34,9 +34,6 @@ object RecommenderALS {
     val outputMode = configMap.getOrElse("outputMode", "oneJSON")
     val numClients = configMap.getOrElse("numClients", "10").toInt
     val numProds = configMap.getOrElse("numProds", "10").toInt
-    val usersCol = configMap.getOrElse("usersCol", "clientIndex")
-    val itemsCol = configMap.getOrElse("itemsCol", "prodNameIndex")
-    val ratingsCol = configMap.getOrElse("ratingsCol", "prodUds")
 
     val resultsDir = "%sresults/%s%s/".format(
       baseDir,
@@ -66,6 +63,14 @@ object RecommenderALS {
     // Loading formatted file as a dataframe table
     val (spartans, clientConverter, clientIndex, productConverter, prodNameIndex) =
       utilities.tableLoader(formattedFile, spark, numClients, numProds)
+
+
+
+
+    // Loading configuration from file or defaults
+    val usersCol = configMap.getOrElse("usersCol", "clientIndex")
+    val itemsCol = configMap.getOrElse("itemsCol", "prodNameIndex")
+    val ratingsCol = configMap.getOrElse("ratingsCol", "prodUds")
 
     // Executing data exploration
     timerModule = System.currentTimeMillis

@@ -29,13 +29,14 @@ class AnalysisGraphX {
 
     val graph = Graph(vertex, edge)
 
-    println("Total Number of vertex(" + vertexName + "): " + g.numVertices)
-    println("Total Number of enlaces(" + edgeName + "): " + g.numEdges)
+    println("Total Number of vertex(" + vertexName + "): " + graph.numVertices)
+    println("Total Number of enlaces(" + edgeName + "): " + graph.numEdges)
 
     val schemaGroupEdges =  StructType(Seq(
       StructField(vertexName+"_orig", dataType = StringType, nullable = false),
       StructField(vertexName+"_dest", dataType = StringType, nullable = false),
       StructField("num_of_"+edgeName, dataType = IntegerType, nullable = false)))
+
     spark.createDataFrame(
       graph.groupEdges((edge1, edge2) => edge1 + edge2)
       .triplets
