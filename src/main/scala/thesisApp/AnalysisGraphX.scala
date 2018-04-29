@@ -29,8 +29,8 @@ class AnalysisGraphX {
 
     val graph = Graph(vertex, edge)
 
-    println("Total Number of vertex(" + vertexName + "): " + g.numVertices)
-    println("Total Number of enlaces(" + edgeName + "): " + g.numEdges)
+    println("Total Number of vertex(" + vertexName + "): " + graph.numVertices)
+    println("Total Number of enlaces(" + edgeName + "): " + graph.numEdges)
 
     val schemaGroupEdges =  StructType(Seq(
       StructField(vertexName+"_orig", dataType = StringType, nullable = false),
@@ -38,40 +38,22 @@ class AnalysisGraphX {
       StructField("num_of_"+edgeName, dataType = IntegerType, nullable = false)))
     spark.createDataFrame(
       graph.groupEdges((edge1, edge2) => edge1 + edge2)
-      .triplets
-      .sortBy(_.attr, false)
-      .map(triplet => Row(triplet.srcAttr.toString, triplet.dstAttr.toString, triplet.attr.toInt)),
-    schemaGroupEdges).show()
-//        "There are " + triplet.attr.toString + " common edges between the vertex" + triplet.srcAttr + " and " + triplet.dstAttr + ".")
-//      .take(10)
-//      .foreach(println)
-
-//    ((8,MANDARINA MALLA 2),(0,PLÁTANO 1ª BOLSA),1)
-//    ((8,MANDARINA MALLA 2),(1,NARANJA ZUMO CARRE),1)
-//    ((8,MANDARINA MALLA 2),(2,BAGUETTE CARREFOUR),1)
-
+        .triplets
+        .sortBy(_.attr, false)
+        .map(triplet => Row(triplet.srcAttr.toString, triplet.dstAttr.toString, triplet.attr.toInt)),
+      schemaGroupEdges).show()
 
     val schemaInDegrees =  StructType(Seq(
-  StructField(vertexName, dataType = StringType, nullable = false),
-  StructField("inDegree", dataType = IntegerType, nullable = false)))
+      StructField(vertexName, dataType = StringType, nullable = false),
+      StructField("inDegree", dataType = IntegerType, nullable = false)))
 
     spark.createDataFrame(
       graph
-      .inDegrees // computes in Degrees
-      .join(vertex)
-      .sortBy(_._2._1, false)
-      .map(x => Row(x._2._2.toString, x._2._1.toInt)),
-  schemaInDegrees).show()
-
-//      .take(10)
-//      .foreach(x => println(x._2._2 + " has " + x._2._1 + " in degrees."))
-//      .foreach(println)
-
-//    PLÁTANO 1ª BOLSA has 45 in degrees.
-//      PAN PISTOLA/BARRA has 39 in degrees.
-//      BAGUETTE CARREFOUR has 36 in degrees.
-
-
+        .inDegrees // computes in Degrees
+        .join(vertex)
+        .sortBy(_._2._1, false)
+        .map(x => Row(x._2._2.toString, x._2._1.toInt)),
+      schemaInDegrees).show()
 
     val schemaPageRank =  StructType(Seq(
       StructField(vertexName, dataType = StringType, nullable = false),
@@ -81,13 +63,9 @@ class AnalysisGraphX {
     val results = graph.pageRank(tolerance, 1-dampingFactor).vertices
     spark.createDataFrame(
       results
-      .join(vertex)
-      .sortBy(_._2._1, false) // sort by the pageRank
+        .join(vertex)
+        .sortBy(_._2._1, false) // sort by the pageRank
         .map(x => Row(x._2._2.toString, x._2._1.toDouble)),
       schemaPageRank).show()
-
-//      .take(10) // get the top 10
-//      .foreach(println)
-//      .foreach(x => println(x._2._2))
   }
 }
