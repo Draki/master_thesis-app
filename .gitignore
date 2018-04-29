@@ -3,4 +3,5 @@
 .idea
 target
 project/target
-/src/main/scala/results
+src/main/scala/results
+src/main/scala/data/DelightingCustomersBD.json
