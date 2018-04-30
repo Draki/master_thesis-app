@@ -32,8 +32,8 @@ object ThesisAppLauncher {
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
-      .appName("TestAppLauncher")
-            .master("local")
+      .appName("ThesisAppLauncher")
+//            .master("local")
       .getOrCreate()
 
     // Loading formatted file as a dataframe table
