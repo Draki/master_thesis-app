@@ -1,8 +1,1 @@
-{"appName": "RecommenderALS",
-  "sourceFile": "DelightingCustomersBDextract2.json",
-  "outputMode": "oneJSON",
-  "numClients": "10",
-  "numProds": "10",
-  "usersCol": "clientIndex",
-  "itemsCol": "prodNameIndex",
-  "ratingsCol": "prodUds"}
+{"appName": "RecommenderALS", "outputMode": "oneJSON", "numClients": "10", "numProds": "10", "usersCol": "clientIndex", "itemsCol": "prodNameIndex", "ratingsCol": "prodUds"}

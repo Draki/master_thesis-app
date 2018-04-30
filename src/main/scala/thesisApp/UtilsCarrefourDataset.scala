@@ -7,18 +7,18 @@ import java.time.LocalDateTime
 import org.apache.spark.ml.feature.{IndexToString, StringIndexer, StringIndexerModel}
 import org.apache.spark.sql.functions.{col, explode}
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 
-class UtilsCarrefourDataset {
+class UtilsCarrefourDataset() {
 
-  def fileFormatter(readDir: String, originalFile: String, writeDir: String):String = {
-    val finalFile = originalFile.replace(".json", "Formatted.json")
-    if (!Files.exists(Paths.get(writeDir + finalFile))) {
+  def fileFormatter(originalFilePath: String, writeDir: String): String = {
+    val finalFilePath = writeDir + originalFilePath.split("/").last.replace(".json", "Formatted.json")
+    if (!Files.exists(Paths.get(finalFilePath))) {
       println("Formateando el archivo BSON (de MongoDB) a líneas JSON")
       print("Paso 1: Formato intermedio...")
       val filemedium = "auxiliarFile.json"
-      val reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(readDir+originalFile))))
-      val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( new File(writeDir+filemedium))))
+      val reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(originalFilePath))))
+      val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir + filemedium))))
       try {
         var content = reader.readLine()
         while (content != null) {
@@ -40,8 +40,8 @@ class UtilsCarrefourDataset {
       }
       print("done\n" +
         "Paso 2: Formato JSON.........")
-      val reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File(writeDir+filemedium))))
-      val writer2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir+finalFile))))
+      val reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File(writeDir + filemedium))))
+      val writer2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(finalFilePath))))
       try {
         var content = reader2.readLine()
         while (content != null) {
@@ -56,13 +56,13 @@ class UtilsCarrefourDataset {
         reader2.close()
         writer2.close()
       }
-      new File(writeDir+filemedium).delete()
+      new File(writeDir + filemedium).delete()
       println("done")
     }
-    writeDir+finalFile
+    finalFilePath
   }
 
-  def tableLoader(formattedFile:String, spark: SparkSession, numClients:Int, numProds:Int): (DataFrame, IndexToString, String, IndexToString, String) = {
+  def tableLoader(formattedFile: String, spark: SparkSession): Dataset[Row] = {
     val schema = StructType(Seq(
       StructField("_id", IntegerType, nullable = false),
       StructField("client", LongType, nullable = false),
@@ -82,7 +82,7 @@ class UtilsCarrefourDataset {
       .option("mode", "DROPMALFORMED")
       .json(formattedFile)
 
-    val flatTable = table
+    table
       .filter("client is not null")
       .withColumn("items", explode(col("items")))
       .select(
@@ -93,22 +93,7 @@ class UtilsCarrefourDataset {
         col("items").getField("n_unit").as("prodUds"),
         col("items").getField("net_am").as("prodsCost"),
         col("mall"))
-      .filter(col("prodName") =!= "BOLSA CARREFOUR")      // No aporta demasiado
-
-    val (clientIndexer, clientConverter, clientIndex) = columnIndexer(flatTable, "client")
-    val spartanspre = filterAmountCols(
-      clientIndexer.transform(flatTable),
-      clientIndex,
-      numClients
-    )
-
-    val (prodNameIndexer, productConverter, prodNameIndex) = columnIndexer(spartanspre, "prodName")
-    val spartans = filterAmountCols(
-      prodNameIndexer.transform(spartanspre),
-      prodNameIndex,
-      numProds
-    )
-    (spartans, clientConverter, clientIndex, productConverter, prodNameIndex)
+      .filter(col("prodName") =!= "BOLSA CARREFOUR") // No aporta demasiado
   }
 
   def columnIndexer(df: DataFrame, colName: String): (StringIndexerModel, IndexToString, String) = {
@@ -126,27 +111,30 @@ class UtilsCarrefourDataset {
     (indexer, deindexer, indexColName)
   }
 
-
-  def filterAmountCols(df: DataFrame, colName: String, numCols: Int):DataFrame ={
+  def filterAmountCols(df: DataFrame, colName: String, numCols: Int): DataFrame = {
     if (colName.isEmpty) return df
-    println("Filtrando el dataset por \"" +colName + "\" según los " + numCols + " valores más frecuentes")
+    println("Filtrando el dataset por \"" + colName + "\" según los " + numCols + " valores más frecuentes")
     df.filter(col(colName) < numCols)
   }
 
-  def timeLogger(module: String, clients: Int, products: Int, start: Long, filePath: String): Unit ={
+  def timeLogger(module: String, clients: Int, products: Int, start: Long, filePath: String): Unit = {
     val bw = new BufferedWriter(new FileWriter(filePath, true))
     try {
       bw.write(
         "{\"timestamp\" : " + LocalDateTime.now() + "," +
-          " \"module\" : " +  module + "," +
-          " \"clients\" : " +  clients + "," +
-          " \"products\" : " +  products + "," +
-          " \"processing_time\" : " +  (System.currentTimeMillis - start)/1000 + "}\n")
+          " \"module\" : " + module + "," +
+          " \"clients\" : " + clients + "," +
+          " \"products\" : " + products + "," +
+          " \"processing_time\" : " + (System.currentTimeMillis - start) / 1000 + "}\n")
     }
     finally bw.close()
   }
 
-  def printFile(df: DataFrame, resultsDir: String, fileName: String, outputMode: String): Unit = {
+  var outputMode = "oneJSON"
+
+  def setOutputMode(mode: String): Unit = {outputMode = mode}
+
+  def printFile(df: DataFrame, resultsDir: String, fileName: String): Unit = {
     outputMode match {
       case "parallelWriteJSON" => df.write.mode("append").json(resultsDir + fileName)
       case "oneJSON" =>

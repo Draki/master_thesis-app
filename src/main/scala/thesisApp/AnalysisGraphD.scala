@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, _}
 
 class AnalysisGraphD {
 
-  def analysisGraphD(df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, outputMode: String, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {
+  def analysisGraphD(df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {
 
     val Seq(vertexName, edgeName) = df.columns.toSeq
     val edgeGenerator = df.distinct()
@@ -23,22 +23,22 @@ class AnalysisGraphD {
       .distinct()
       .orderBy(desc("linkWeight"))
     println("Calculating strongestLinks")
-    utilities.printFile(strongestLinks, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_strongestLinks", outputMode)
+    utilities.printFile(strongestLinks, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_strongestLinks")
 
-    val vertexwithMostNeighbours = edge
+    val vertexNumNeighbours = edge
       .groupBy("orig").agg(count("orig").as("neighbours"))
       .orderBy(desc("neighbours"))
     println("Calculating vertexwithMostNeighbours")
-    utilities.printFile(vertexwithMostNeighbours, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexwithMostNeighbours", outputMode)
+    utilities.printFile(vertexNumNeighbours, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexNumNeighbours")
 
-    val vertexWithMostOutLinks = edge
+    val vertexOutDegree = edge
       .groupBy("orig").agg(sum("linkWeight").as("linksOfVertex"))
       .orderBy(desc("linksOfVertex"))
     println("Calculating vertexWithMostOutLinks")
-    utilities.printFile(vertexWithMostOutLinks, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexWithMostOutLinks", outputMode)
+    utilities.printFile(vertexOutDegree, resultsDir, "GraphX(" + vertexName + "," + edgeName + ")_vertexOutDegree")
 
     var iteratorDF = edge
-      .join(vertexWithMostOutLinks, "orig")
+      .join(vertexOutDegree, "orig")
       .withColumn("propagateWeight", (col("linkWeight") * dampingFactor) / col("linksOfVertex"))
       .select("orig","dest", "propagateWeight")
       .withColumn("rank", lit(1.0))
@@ -73,6 +73,6 @@ class AnalysisGraphD {
       .orderBy(desc("rank"))
 
     println("Calculating pageRank")
-    utilities.printFile(rankedVertex, resultsDir, "GraphD(" + vertexName + "," + edgeName + ").pageRank(dampFact_" + dampingFactor + ",tol_"+ tolerance + ")_rankedVertex", outputMode)
+    utilities.printFile(rankedVertex, resultsDir, "GraphD(" + vertexName + "," + edgeName + ").pageRank(dampFact_" + dampingFactor + ",tol_"+ tolerance + ")_rankedVertex")
   }
 }

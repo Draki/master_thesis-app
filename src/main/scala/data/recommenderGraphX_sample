@@ -1,0 +1,1 @@
+{"appName": "RecommenderGraphX", "outputMode": "oneJSON", "numClients": "5", "numProds": "5", "vertexCol": "prodNameIndex", "vertexPropertiesCol": "prodName", "edgeCol": "transac"}

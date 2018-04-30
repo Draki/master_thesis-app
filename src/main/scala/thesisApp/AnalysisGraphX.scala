@@ -1,12 +1,13 @@
 package thesisApp
 
 import org.apache.spark.graphx.{Edge, Graph}
-import org.apache.spark.sql.functions.{col, lit}
+import org.apache.spark.sql.functions.{col, lit, sum}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+
 class AnalysisGraphX {
 
-  def analysisGraphX(dfVertex: DataFrame,dfEdgeGenerator: DataFrame, spark: SparkSession, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {
+  def analysisGraphX(dfVertex: DataFrame,dfEdgeGenerator: DataFrame, resultsDir:String, utilities:UtilsCarrefourDataset, spark:SparkSession, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {
 
     val Seq(vertexIndex, vertexName) = dfVertex.columns.toSeq
     val Seq(vertexNameB, edgeName) = dfEdgeGenerator.columns.toSeq
@@ -36,36 +37,42 @@ class AnalysisGraphX {
       StructField(vertexName+"_orig", dataType = StringType, nullable = false),
       StructField(vertexName+"_dest", dataType = StringType, nullable = false),
       StructField("num_of_"+edgeName, dataType = IntegerType, nullable = false)))
-    spark.createDataFrame(
+
+     val strongestLinks = spark.createDataFrame(
       graph.groupEdges((edge1, edge2) => edge1 + edge2)
         .triplets
         .sortBy(_.attr, false)
         .map(triplet => Row(triplet.srcAttr.toString, triplet.dstAttr.toString, triplet.attr.toInt)),
-      schemaGroupEdges).show()
+      schemaGroupEdges)
+      .groupBy(vertexName+"_orig", vertexName+"_dest")
+      .agg(sum("num_of_"+edgeName).as("num_of_"+edgeName))
+    utilities.printFile(strongestLinks, resultsDir, "GraphX(" + vertexName + "," + edgeName + ")_strongestLinks")
 
-    val schemaInDegrees =  StructType(Seq(
+    val schemaOutDegrees =  StructType(Seq(
       StructField(vertexName, dataType = StringType, nullable = false),
-      StructField("inDegree", dataType = IntegerType, nullable = false)))
+      StructField("outDegree", dataType = IntegerType, nullable = false)))
 
-    spark.createDataFrame(
+    val vertexOutDegree = spark.createDataFrame(
       graph
-        .inDegrees // computes in Degrees
+        .outDegrees // computes out Degrees
         .join(vertex)
         .sortBy(_._2._1, false)
         .map(x => Row(x._2._2.toString, x._2._1.toInt)),
-      schemaInDegrees).show()
+      schemaOutDegrees)
+    utilities.printFile(vertexOutDegree, resultsDir, "GraphX(" + vertexName + "," + edgeName + ")_vertexOutDegree")
 
     val schemaPageRank =  StructType(Seq(
       StructField(vertexName, dataType = StringType, nullable = false),
       StructField("rank", dataType = DoubleType, nullable = false)))
 
     println("\n\n>>> Top 10 recomendaciones:\n")
-    val results = graph.pageRank(tolerance, 1-dampingFactor).vertices
-    spark.createDataFrame(
-      results
+    val rankedVertex = graph.pageRank(tolerance, 1-dampingFactor).vertices
+    val rankedVertexDF = spark.createDataFrame(
+      rankedVertex
         .join(vertex)
         .sortBy(_._2._1, false) // sort by the pageRank
         .map(x => Row(x._2._2.toString, x._2._1.toDouble)),
-      schemaPageRank).show()
+      schemaPageRank)
+    utilities.printFile(rankedVertexDF, resultsDir, "GraphX(" + vertexName + "," + edgeName + ").pageRank(dampFact_" + dampingFactor + ",tol_"+ tolerance + ")_rankedVertex")
   }
 }
