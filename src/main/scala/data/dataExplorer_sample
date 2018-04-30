@@ -1,1 +1,4 @@
-{"appName": "DataExplorer", "outputMode": "oneJSON", "numClients": "15", "numProds": "15"}
+{"appName": "DataExplorer",
+  "outputMode": "oneJSON",
+  "numClients": "15",
+  "numProds": "15"}

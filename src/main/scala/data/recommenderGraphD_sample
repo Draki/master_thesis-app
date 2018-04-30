@@ -1,1 +1,6 @@
-{"appName": "RecommenderGraphD", "outputMode": "oneJSON", "numClients": "10", "numProds": "10", "vertexCol": "prodName", "edgeCol": "transac"}
+{"appName": "RecommenderGraphD",
+  "outputMode": "oneJSON",
+  "numClients": "10",
+  "numProds": "10",
+  "vertexCol": "prodName",
+  "edgeCol": "transac"}

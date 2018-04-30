@@ -1,6 +1,6 @@
-name := "master_thesis-app"
+name := "thesisApp"
 
-version := "0.1"
+version := "1.0"
 
 scalaVersion := "2.11.8"
 
