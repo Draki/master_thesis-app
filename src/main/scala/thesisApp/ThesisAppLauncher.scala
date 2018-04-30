@@ -15,8 +15,8 @@ import scala.util.parsing.json.JSON
 object ThesisAppLauncher {
   def main(args: Array[String]) {
 
-    val sourceFile = if (args.length > 0) args(0) else "./src/main/scala/data/DelightingCustomersBDextract2.json"
-    val outputDir = if (args.length > 1) args(1) else "./src/main/scala/results/"
+    val sourceFile = if (args.length > 0) args(0) else "./data/DelightingCustomersBDextract2.json"
+    val outputDir = if (args.length > 1) args(1) else "./results/"
     val analisysList = if (args.length > 2) args.toList.drop(2) else List("default")
 
     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
