@@ -4,6 +4,7 @@ import org.apache.spark.graphx.{Edge, Graph}
 import org.apache.spark.sql.functions.{col, lit}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+
 class AnalysisGraphX {
 
   def analysisGraphX(dfVertex: DataFrame,dfEdgeGenerator: DataFrame, spark: SparkSession, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {

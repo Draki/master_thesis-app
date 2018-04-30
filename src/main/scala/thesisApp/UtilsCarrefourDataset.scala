@@ -12,13 +12,12 @@ import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 class UtilsCarrefourDataset() {
 
   def fileFormatter(originalFilePath: String, writeDir: String): String = {
-    val originalFile = new File(originalFilePath)
-    val finalFilePath = writeDir + originalFile.getName.replace(".json", "Formatted.json")
+    val finalFilePath = writeDir + originalFilePath.split("/").last.replace(".json", "Formatted.json")
     if (!Files.exists(Paths.get(finalFilePath))) {
       println("Formateando el archivo BSON (de MongoDB) a líneas JSON")
       print("Paso 1: Formato intermedio...")
       val filemedium = "auxiliarFile.json"
-      val reader = new BufferedReader(new InputStreamReader(new FileInputStream(originalFile)))
+      val reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(originalFilePath))))
       val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir + filemedium))))
       try {
         var content = reader.readLine()

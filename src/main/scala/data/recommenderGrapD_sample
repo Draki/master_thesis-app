@@ -1,8 +1,0 @@
-{"appName": "RecommenderGraphD",
-  "sourceFile": "DelightingCustomersBDextract2.json",
-  "outputMode": "oneJSON",
-  "numClients": "10",
-  "numProds": "10",
-  "vertexCol": "prodName",
-  "edgeCol": "transac"
-}

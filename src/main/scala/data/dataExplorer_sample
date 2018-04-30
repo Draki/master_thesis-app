@@ -1,5 +1,1 @@
-{"appName": "DataExplorer",
-  "sourceFile": "DelightingCustomersBDextract2.json",
-  "outputMode": "oneJSON",
-  "numClients": "10",
-  "numProds": "10"}
+{"appName": "DataExplorer", "outputMode": "oneJSON", "numClients": "15", "numProds": "15"}

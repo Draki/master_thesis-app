@@ -10,9 +10,9 @@ class DataExploration {
     val totals = df
       .agg(
         countDistinct("clientIndex").as("total_clients"),
-        countDistinct("prodNameIndex").as("otal_products"),
-        sum("prodUds").as("total_products_sold"),
-        sum("prodsCost").as("total_earnings"),
+        countDistinct("prodNameIndex").as("total_different_products"),
+        bround(sum("prodUds")).as("total_products_sold"),
+        bround(sum("prodsCost"), 2).as("total_earnings"),
         countDistinct("transac").as("total_transactions")
       )
     val Row(totalItems, totalEarns, totalTransactions) = totals
@@ -24,9 +24,9 @@ class DataExploration {
         bround(sum("prodUds")).as("udsSold"),
         bround(sum("prodUds") * 100 / totalItems, 2)as("percentUdsSold"),
         bround(sum("prodsCost"), 2).as("earnings"),
-        bround(sum("prodsCost") * 100 / totalItems, 2)as("percentEarning"),
+        bround(sum("prodsCost") * 100 / totalEarns, 2)as("percentEarning"),
         countDistinct("transac").as("transacWithProd"),
-        bround(sum("transac") * 100 / totalItems, 2)as("percentTransacWithProd")
+        bround(sum("transac") * 100 / totalTransactions, 2)as("percentTransacWithProd")
       )
 
     utilities.printFile(totals, resultsDir, appName + "_totals")

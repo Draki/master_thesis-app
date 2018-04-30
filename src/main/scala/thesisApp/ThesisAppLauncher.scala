@@ -17,6 +17,7 @@ object ThesisAppLauncher {
 
     val sourceFile = if (args.length > 0) args(0) else "./src/main/scala/data/DelightingCustomersBDextract2.json"
     val outputDir = if (args.length > 1) args(1) else "./src/main/scala/results/"
+    new File(outputDir).mkdirs()
     val analisysList = if (args.length > 2) args.toList.drop(2) else List("./src/main/scala/data/dataExplorer_sample")
 
     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
@@ -31,8 +32,8 @@ object ThesisAppLauncher {
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
-      .appName("ThesisAppLauncher")
-      .master("local")
+      .appName("TestAppLauncher")
+//      .master("local")
       .getOrCreate()
 
     // Loading formatted file as a dataframe table
@@ -46,20 +47,22 @@ object ThesisAppLauncher {
     for (analysisConf <- analisysList) {
 
       // Loading configuration from file or defaults
-      val configMap: Map[String, String] = JSON.parseFull(analysisConf) match {
-        case Some(e: Map[String, String]) => e
+      val source = scala.io.Source.fromFile(analysisConf)
+      val configJson = try JSON.parseFull(source.mkString) finally source.close()
+
+      val configMap: Map[String, String] = configJson match {
+        case Some(e: Map[String, String] @unchecked) => e
         case _ => Map()
       }
       val appName = configMap.getOrElse("appName", "DataExplorer")
       utilities.setOutputMode(configMap.getOrElse("outputMode", "oneJSON"))
       val numClients = configMap.getOrElse("numClients", "10").toInt
       val numProds = configMap.getOrElse("numProds", "10").toInt
-
       val resultsDir = "%s/%s/%s/".format(
         outputDir,
-        timestamp,
-        sourceFile.replace(".json", "")
-      )
+        sourceFile.split("/").last.replace(".json", ""),
+        timestamp)
+
       new File(resultsDir).mkdirs()
       val timeLogPath = resultsDir + "timeLog.json"
 
