@@ -151,7 +151,7 @@ object ThesisAppLauncher {
         df.groupBy(vertexCol)
           .agg(first(vertexPropertiesCol).as(vertexPropertiesCol)),
         df.select(vertexCol, edgeCol),
-        spark
+        resultsDir, utilities, spark
       )
       appName + "(" + vertexCol + "," + edgeCol + ")"
     }

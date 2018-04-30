@@ -25,20 +25,20 @@ class AnalysisGraphD {
     println("Calculating strongestLinks")
     utilities.printFile(strongestLinks, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_strongestLinks")
 
-    val vertexwithMostNeighbours = edge
+    val vertexNumNeighbours = edge
       .groupBy("orig").agg(count("orig").as("neighbours"))
       .orderBy(desc("neighbours"))
     println("Calculating vertexwithMostNeighbours")
-    utilities.printFile(vertexwithMostNeighbours, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexwithMostNeighbours")
+    utilities.printFile(vertexNumNeighbours, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexNumNeighbours")
 
-    val vertexWithMostOutLinks = edge
+    val vertexOutDegree = edge
       .groupBy("orig").agg(sum("linkWeight").as("linksOfVertex"))
       .orderBy(desc("linksOfVertex"))
     println("Calculating vertexWithMostOutLinks")
-    utilities.printFile(vertexWithMostOutLinks, resultsDir, "GraphD(" + vertexName + "," + edgeName + ")_vertexWithMostOutLinks")
+    utilities.printFile(vertexOutDegree, resultsDir, "GraphX(" + vertexName + "," + edgeName + ")_vertexOutDegree")
 
     var iteratorDF = edge
-      .join(vertexWithMostOutLinks, "orig")
+      .join(vertexOutDegree, "orig")
       .withColumn("propagateWeight", (col("linkWeight") * dampingFactor) / col("linksOfVertex"))
       .select("orig","dest", "propagateWeight")
       .withColumn("rank", lit(1.0))
