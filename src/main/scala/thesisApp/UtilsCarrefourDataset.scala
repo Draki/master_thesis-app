@@ -8,17 +8,62 @@ import org.apache.spark.ml.feature.{IndexToString, StringIndexer, StringIndexerM
 import org.apache.spark.sql.functions.{col, explode}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FileSystem, Path}
 
 class UtilsCarrefourDataset() {
 
-  def fileFormatter(originalFilePath: String, writeDir: String): String = {
-    val finalFilePath = writeDir + originalFilePath.split("/").last.replace(".json", "Formatted.json")
-    if (!Files.exists(Paths.get(finalFilePath))) {
+  var hdfs: FileSystem = _
+  var prefixPath = ""
+  var hdfsMode = false
+
+  def setHDFS(hdfsAccess: String): Unit = {
+    val conf = new Configuration()
+    conf.set("fs.defaultFS", hdfsAccess)
+    conf.set("dfs.replication", "1")
+    hdfs = FileSystem.get(conf)
+    prefixPath = hdfsAccess
+    hdfsMode = true
+  }
+
+  def mkDirHDFS(dirPath: String): Unit = {
+    val newFolder = new Path(prefixPath + dirPath)
+    if(!hdfs.exists(newFolder)) {
+      hdfs.mkdirs(newFolder)
+    }
+  }
+
+
+  def fileFormatter(sourceDir: String, originalFile: String, writeDir: String): String = {
+
+    if (hdfsMode) return sourceDir + originalFile
+
+    val finalFile = originalFile.replace(".json", "Formatted.json")
+
+    val formattedFileExist = if (hdfsMode) {
+      hdfs.exists(new Path(writeDir + finalFile))
+    } else {
+      Files.exists(Paths.get(writeDir + finalFile))
+    }
+
+    if (!formattedFileExist) {
       println("Formateando el archivo BSON (de MongoDB) a líneas JSON")
       print("Paso 1: Formato intermedio...")
+
       val filemedium = "auxiliarFile.json"
-      val reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(originalFilePath))))
-      val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir + filemedium))))
+
+      val reader = if (hdfsMode) {
+        new BufferedReader(new InputStreamReader(hdfs.open(new Path(sourceDir + originalFile)).getWrappedStream))
+      } else {
+        new BufferedReader(new InputStreamReader(new FileInputStream(new File(sourceDir + originalFile))))
+      }
+
+      val writer = if (hdfsMode) {
+        new BufferedWriter(new OutputStreamWriter(hdfs.create(new Path(writeDir + filemedium)).getWrappedStream))
+      } else {
+        new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir + filemedium))))
+      }
+
       try {
         var content = reader.readLine()
         while (content != null) {
@@ -40,8 +85,19 @@ class UtilsCarrefourDataset() {
       }
       print("done\n" +
         "Paso 2: Formato JSON.........")
-      val reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File(writeDir + filemedium))))
-      val writer2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(finalFilePath))))
+
+      val reader2 = if (hdfsMode) {
+        new BufferedReader(new InputStreamReader(hdfs.open(new Path(writeDir + filemedium)).getWrappedStream))
+      } else {
+        new BufferedReader(new InputStreamReader(new FileInputStream(new File(writeDir + filemedium))))
+      }
+
+      val writer2 = if (hdfsMode) {
+        new BufferedWriter(new OutputStreamWriter(hdfs.create(new Path(writeDir + finalFile)).getWrappedStream))
+      } else {
+        new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(writeDir + finalFile))))
+      }
+
       try {
         var content = reader2.readLine()
         while (content != null) {
@@ -59,10 +115,12 @@ class UtilsCarrefourDataset() {
       new File(writeDir + filemedium).delete()
       println("done")
     }
-    finalFilePath
+
+    writeDir + finalFile
   }
 
   def tableLoader(formattedFile: String, spark: SparkSession): Dataset[Row] = {
+
     val schema = StructType(Seq(
       StructField("_id", IntegerType, nullable = false),
       StructField("client", LongType, nullable = false),
@@ -80,7 +138,7 @@ class UtilsCarrefourDataset() {
     val table = spark.read
       .schema(schema)
       .option("mode", "DROPMALFORMED")
-      .json(formattedFile)
+      .json(prefixPath + formattedFile)
 
     table
       .filter("client is not null")
@@ -112,34 +170,57 @@ class UtilsCarrefourDataset() {
   }
 
   def filterAmountCols(df: DataFrame, colName: String, numCols: Int): DataFrame = {
-    if (colName.isEmpty) return df
+    if (colName.isEmpty || numCols == 0) return df
     println("Filtrando el dataset por \"" + colName + "\" según los " + numCols + " valores más frecuentes")
     df.filter(col(colName) < numCols)
   }
 
   def timeLogger(module: String, clients: Int, products: Int, start: Long, filePath: String): Unit = {
-    val bw = new BufferedWriter(new FileWriter(filePath, true))
+    val homeDir = hdfs.getHomeDirectory
+    val fileExist = if (hdfsMode) {
+      hdfs.exists(new Path(prefixPath + filePath))
+    } else {
+      Files.exists(Paths.get(prefixPath + filePath))
+    }
+    val writeStream = if (hdfsMode) {
+      if (!fileExist) {
+        hdfs.create(new Path(prefixPath + filePath)).getWrappedStream
+      } else {
+        hdfs.append(new Path(prefixPath + filePath)).getWrappedStream
+      }
+    } else {
+      if (!fileExist) {
+        new FileOutputStream(new File(prefixPath + filePath))
+      } else {
+        new FileOutputStream(new File(prefixPath + filePath), true)
+      }
+    }
+
+    val writer = new BufferedWriter(new OutputStreamWriter(writeStream))
     try {
-      bw.write(
+      writer.append(
         "{\"timestamp\" : " + LocalDateTime.now() + "," +
           " \"module\" : " + module + "," +
           " \"clients\" : " + clients + "," +
           " \"products\" : " + products + "," +
           " \"processing_time\" : " + (System.currentTimeMillis - start) / 1000 + "}\n")
+      writer.flush()
     }
-    finally bw.close()
+    finally writer.close()
   }
 
   var outputMode = "oneJSON"
 
-  def setOutputMode(mode: String): Unit = {outputMode = mode}
+  def setOutputMode(mode: String): Unit = {
+    outputMode = mode
+  }
 
   def printFile(df: DataFrame, resultsDir: String, fileName: String): Unit = {
     outputMode match {
-      case "parallelWriteJSON" => df.write.mode("append").json(resultsDir + fileName)
-      case "oneJSON" =>
-        val bw = new BufferedWriter(new FileWriter(new File(resultsDir + fileName + ".json")))
-        try df.toJSON.collect().foreach(x => bw.write(x+"\n"))
+      case "parallelWriteJSON" => df.write.mode("append").json(prefixPath + resultsDir + fileName)
+      case "oneJSON" => // For local mode purposes ONLY
+        val bw = new BufferedWriter(new FileWriter(new File(prefixPath + resultsDir + fileName + ".json")))
+        try df.toJSON.collect().foreach(x => bw.write(x + "\n"))
         finally bw.close()
       case "standarOutput" => df.show()
       case _ => sys.error("Please type the right outputMode: \"parallelWriteJSON\"/\"oneJSON\"/\"standarOutput\"\n")

@@ -18,7 +18,7 @@ class AnalysisALS {
     println("\nCreando el modelo ALS.")
     // Build the recommendation model using ALS on the training data
     val als = new ALS()
-      .setMaxIter(10)
+      .setMaxIter(1)
       .setRegParam(0.01)
       .setUserCol("user")
       .setItemCol("item")
@@ -55,7 +55,6 @@ class AnalysisALS {
       .withColumn("recommendations", explode(col("recommendations")))
       .select(col("user"), col("recommendations").getField("item"), col("recommendations").getField("rating"))
       .toDF(df.columns.toList: _*)
-
     (top10recommendations, rmse)
   }
 }

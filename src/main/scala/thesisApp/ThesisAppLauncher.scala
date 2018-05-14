@@ -11,33 +11,56 @@ import org.apache.spark.sql.{DataFrame, SparkSession, functions}
 
 import scala.util.parsing.json.JSON
 
-// args(sourcefile, outputDir, *recommenderFiles)
+// args(sourceDir, sourcefile, outputDir, *recommenderFiles)
 object ThesisAppLauncher {
   def main(args: Array[String]) {
 
-    val sourceFile = if (args.length > 0) args(0) else "./data/DelightingCustomersBDextract2.json"
-    val outputDir = if (args.length > 1) args(1) else "./results/"
-    val analisysList = if (args.length > 2) args.toList.drop(2) else List("default")
+    val fileSystemMode = if (args.length > 0) args(0) else "local" // "hdfs://hadoop:9000"
+    var sourceDir = if (args.length > 1) args(1) else "/data/"
+    val sourceFile = if (args.length > 2) args(2) else "DelightingCustomersBDextract2.json"
+    var outputDir = if (args.length > 3) args(3) else "/results/"
+    val analisysList = if (args.length > 4) args.toList.drop(4) else List("default")
 
     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
-    new File(outputDir).mkdirs()
 
     // Loading modules
     val utilities = new UtilsCarrefourDataset()
 
+    // Activating HDFS mode
+    if (fileSystemMode.split(":").head.equals("hdfs")) {
+      utilities.setHDFS(fileSystemMode)
+      outputDir = outputDir + sourceFile.replace(".json", "")
+      utilities.mkDirHDFS(outputDir)
+      outputDir = outputDir + "/" + timestamp
+      utilities.mkDirHDFS(outputDir)
+      outputDir = outputDir + "/"
+    } else {
+      sourceDir = "." + sourceDir
+      outputDir = "." + outputDir
+      new File(outputDir).mkdirs()
+      outputDir = outputDir + sourceFile.replace(".json", "")
+      new File(outputDir).mkdirs()
+      outputDir = outputDir + "/" + timestamp
+      new File(outputDir).mkdirs()
+      outputDir = outputDir + "/"
+    }
+
     // Formatting file to the standar JSON format managed by Spark
     var timerModule = System.currentTimeMillis
-    val formattedFile = utilities.fileFormatter(sourceFile, outputDir)
+    val formattedFilePath = utilities.fileFormatter(sourceDir, sourceFile, outputDir)
 
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
       .appName("ThesisAppLauncher")
+      .config("spark.executor.cores","4")
+      .config("spark.executor.memory","650m")
+      .config("spark.hadoop.dfs.replication","1")
 //            .master("local")
       .getOrCreate()
 
     // Loading formatted file as a dataframe table
-    val flatTable = utilities.tableLoader(formattedFile, spark)
+    val flatTable = utilities.tableLoader(formattedFilePath, spark)
 
     val (clientIndexer, clientConverter, clientIndex) = utilities.columnIndexer(flatTable, "client")
     val (prodNameIndexer, productConverter, prodNameIndex) = utilities.columnIndexer(flatTable, "prodName")
@@ -45,7 +68,6 @@ object ThesisAppLauncher {
 
 
     for (analysisConf <- analisysList) {
-
 
       // Loading configuration from file or defaults
       val configJson = if (analysisConf == "default") { "" }
@@ -56,16 +78,10 @@ object ThesisAppLauncher {
         case _ => Map()
       }
       val appName = configMap.getOrElse("appName", "DataExplorer")
-      utilities.setOutputMode(configMap.getOrElse("outputMode", "oneJSON"))
+      utilities.setOutputMode(configMap.getOrElse("outputMode", "parallelWriteJSON"))
       val numClients = configMap.getOrElse("numClients", "10").toInt
       val numProds = configMap.getOrElse("numProds", "10").toInt
-      val resultsDir = "%s/%s/%s/".format(
-        outputDir,
-        sourceFile.split("/").last.replace(".json", ""),
-        timestamp)
-
-      new File(resultsDir).mkdirs()
-      val timeLogPath = resultsDir + "timeLog.json"
+      val timeLogPath = outputDir + "timeLog.json"
 
       // Taking the top clients and products
       val spartansMid = utilities
@@ -76,25 +92,27 @@ object ThesisAppLauncher {
 
       // Executing analysis
       timerModule = System.currentTimeMillis
-      val saveName = appName match {
-        case "DataExplorer" => dataExplorer(appName, spartans, resultsDir, utilities)
-        case "RecommenderALS" => recommenderALS(appName, configMap, spartans, resultsDir, utilities, clientConverter, productConverter)
-        case "RecommenderGraphD" => recommenderGraphD(appName, configMap, spartans, resultsDir, utilities)
-        case "RecommenderGraphX" => recommenderGraphX(appName, configMap, spartans, resultsDir, utilities, spark)
+      val saveName = appName
+      match {
+        case "DataExplorer" => dataExplorer(appName, spartans, outputDir, utilities)
+        case "RecommenderALS" => recommenderALS(appName, configMap, spartans, outputDir, utilities, clientConverter, productConverter)
+        case "RecommenderGraphD" => recommenderGraphD(appName, configMap, spartans, outputDir, utilities)
+        case "RecommenderGraphX" => recommenderGraphX(appName, configMap, spartans, outputDir, utilities, spark)
         case _ => "WRONG CONFIG FILE FOR ANALYSIS: " + analysisConf
       }
+      println("utilities.timeLogger(" + saveName + ", " + numClients + ", " + numProds + ", " + timerModule + ", " + timeLogPath)
       utilities.timeLogger(saveName, numClients, numProds, timerModule, timeLogPath)
     }
 
   }
-  def dataExplorer(appName:String, df:DataFrame, resultsDir:String, utilities:UtilsCarrefourDataset): String = {
+  def dataExplorer(appName:String, df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset): String = {
     val explorer = new DataExploration()
-    explorer.dataExploration(appName, df, resultsDir, utilities)
+    explorer.dataExploration(appName, df, outputDir, utilities)
     appName
   }
 
 
-  def recommenderALS(appName:String, configMap: Map[String, String], df:DataFrame, resultsDir:String, utilities:UtilsCarrefourDataset, clientConverter:IndexToString, productConverter:IndexToString): String = {
+  def recommenderALS(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset, clientConverter:IndexToString, productConverter:IndexToString): String = {
     // Loading configuration from file or defaults
     val usersCol = configMap.getOrElse("usersCol", "clientIndex")
     val itemsCol = configMap.getOrElse("itemsCol", "prodNameIndex")
@@ -102,7 +120,6 @@ object ThesisAppLauncher {
 
     // Executing ALS analysis
     val analizer = new AnalysisALS()
-
     var (clientRecs, rmse) = analizer.analisysALS(
       df.groupBy(itemsCol, usersCol)
         .agg(functions.sum(ratingsCol).as(ratingsCol))
@@ -119,12 +136,12 @@ object ThesisAppLauncher {
       .groupBy(colDEIndexified(0))
       .agg(collect_set(struct(colDEIndexified(1), colDEIndexified(2))).alias("recommendations"))
 
-    utilities.printFile(convertedClientRecs, resultsDir, appName + "(" + cols(0) + "," + cols(1) + ")_by_" + cols(2) + "_rmse_" + rmse)
+    utilities.printFile(convertedClientRecs, outputDir, appName + "(" + cols(0) + "," + cols(1) + ")_by_" + cols(2) + "_rmse_" + rmse)
     appName + "(" + itemsCol + "," + usersCol + ")_rated_by_" + ratingsCol
   }
 
 
-  def recommenderGraphD(appName:String, configMap: Map[String, String], df:DataFrame, resultsDir:String, utilities:UtilsCarrefourDataset): String = {
+  def recommenderGraphD(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset): String = {
     // Loading configuration from file or defaults
     val vertexCol = configMap.getOrElse("vertexCol", "prodName")
     val edgeCol = configMap.getOrElse("edgeCol", "clientIndex")
@@ -133,14 +150,14 @@ object ThesisAppLauncher {
     val graphAnalyzer = new AnalysisGraphD()
     graphAnalyzer.analysisGraphD(
       df.select(vertexCol, edgeCol),
-      resultsDir, utilities
+      outputDir, utilities
     )
 
     appName + "(" + vertexCol + "," + edgeCol + ")"
   }
 
 
-  def recommenderGraphX(appName:String, configMap: Map[String, String], df:DataFrame, resultsDir:String, utilities:UtilsCarrefourDataset, spark:SparkSession): String = {
+  def recommenderGraphX(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset, spark:SparkSession): String = {
     // Loading configuration from file or defaults
     val vertexCol = configMap.getOrElse("vertexCol", "prodNameIndex")
     val vertexPropertiesCol = configMap.getOrElse("vertexPropertiesCol", "prodName")
@@ -152,7 +169,7 @@ object ThesisAppLauncher {
       df.groupBy(vertexCol)
         .agg(first(vertexPropertiesCol).as(vertexPropertiesCol)),
       df.select(vertexCol, edgeCol),
-      resultsDir, utilities, spark
+      outputDir, utilities, spark
     )
     appName + "(" + vertexCol + "," + edgeCol + ")"
   }

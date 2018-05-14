@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, _}
 
 class AnalysisGraphD {
 
-  def analysisGraphD(df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, dampingFactor:Double = 0.85, tolerance:Double = 0.01): Unit = {
+  def analysisGraphD(df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, dampingFactor:Double = 0.15, tolerance:Double = 0.01, maxIterations:Int = 10): Unit = {
 
     val Seq(vertexName, edgeName) = df.columns.toSeq
     val edgeGenerator = df.distinct()
@@ -14,7 +14,7 @@ class AnalysisGraphD {
       .join(edgeGenerator.toDF("dest", "link"),"link")
       .groupBy("orig", "dest")
       .agg(count("link").as("linkWeight"))
-      .filter(col("orig") =!= col("dest"))
+      .filter(col("orig") =!= col("dest")).cache()
 
     val strongestLinks = edge
       .withColumn("_A", functions.when(col("orig").lt(col("dest")), col("orig")).otherwise(col("dest")))
@@ -39,32 +39,33 @@ class AnalysisGraphD {
 
     var iteratorDF = edge
       .join(vertexOutDegree, "orig")
-      .withColumn("propagateWeight", (col("linkWeight") * dampingFactor) / col("linksOfVertex"))
+      .withColumn("propagateWeight", (col("linkWeight") * (1-dampingFactor)) / col("linksOfVertex"))
       .select("orig","dest", "propagateWeight")
       .withColumn("rank", lit(1.0))
 
-    var vuelta = 0
+    edge.unpersist()
+
+    var iteration = 0
     var tol = 1.0
 
-    while (tol > tolerance) {
+    while ((tol > tolerance) && (maxIterations > iteration)) {
       val rankAdder = iteratorDF
         .withColumn("rankExteralAddition", col("propagateWeight")*col("rank"))
         .groupBy("dest").agg(sum("rankExteralAddition"))
         .select(
           col("dest").as("orig"),
-          col("sum(rankExteralAddition)").as("rankExteralAddition")
-        )
+          col("sum(rankExteralAddition)").as("rankExteralAddition"))
 
-      iteratorDF = iteratorDF.join(rankAdder,"orig")
+      iteratorDF = iteratorDF.join(broadcast(rankAdder),"orig")
         .withColumn("oldRank", col("rank"))
-        .withColumn("rank", (col("rank")*(1-dampingFactor))+ col("rankExteralAddition"))
+        .withColumn("rank", (col("rank")*dampingFactor)+ col("rankExteralAddition"))
         .withColumn("tolerance", abs(col("oldRank")-col("rank")))
         .drop("rankExteralAddition")
 
       tol = iteratorDF.agg(max("tolerance")).head().getDouble(0)
+      iteration += 1
 
-      vuelta += 1
-      println("vuelta: " + vuelta + ", tolerance: " + tol + ", iteratorDF size: " + iteratorDF.count())
+      println("vuelta: " + iteration + ", tolerance: " + tol + ", iteratorDF size: " + iteratorDF.count())
     }
 
     val rankedVertex = iteratorDF

@@ -46,6 +46,7 @@ class AnalysisGraphX {
       schemaGroupEdges)
       .groupBy(vertexName+"_orig", vertexName+"_dest")
       .agg(sum("num_of_"+edgeName).as("num_of_"+edgeName))
+    strongestLinks
     utilities.printFile(strongestLinks, resultsDir, "GraphX(" + vertexName + "," + edgeName + ")_strongestLinks")
 
     val schemaOutDegrees =  StructType(Seq(
@@ -54,7 +55,7 @@ class AnalysisGraphX {
 
     val vertexOutDegree = spark.createDataFrame(
       graph
-        .outDegrees // computes out Degrees
+        .outDegrees
         .join(vertex)
         .sortBy(_._2._1, false)
         .map(x => Row(x._2._2.toString, x._2._1.toInt)),
@@ -70,7 +71,7 @@ class AnalysisGraphX {
     val rankedVertexDF = spark.createDataFrame(
       rankedVertex
         .join(vertex)
-        .sortBy(_._2._1, false) // sort by the pageRank
+        .sortBy(_._2._1, false)
         .map(x => Row(x._2._2.toString, x._2._1.toDouble)),
       schemaPageRank)
     utilities.printFile(rankedVertexDF, resultsDir, "GraphX(" + vertexName + "," + edgeName + ").pageRank(dampFact_" + dampingFactor + ",tol_"+ tolerance + ")_rankedVertex")

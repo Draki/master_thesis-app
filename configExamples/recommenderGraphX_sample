@@ -1,5 +1,5 @@
 {"appName": "RecommenderGraphX",
-  "outputMode": "oneJSON",
+  "outputMode": "parallelWriteJSON",
   "numClients": "5",
   "numProds": "5",
   "vertexCol": "prodNameIndex",
