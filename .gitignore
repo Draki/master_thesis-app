@@ -1,8 +1,8 @@
 *.class
 *.log
 .idea
+project
 target
-project/target
 results
-AAA
-data/DelightingCustomersBD.json
+AAA pruebas AAA
+data
