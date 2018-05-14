@@ -11,15 +11,27 @@ import org.apache.spark.sql.{DataFrame, SparkSession, functions}
 
 import scala.util.parsing.json.JSON
 
-// args(sourceDir, sourcefile, outputDir, *recommenderFiles)
+// args(environment, commonConfig, *recommenderFiles)
 object ThesisAppLauncher {
   def main(args: Array[String]) {
 
-    val fileSystemMode = if (args.length > 0) args(0) else "local" // "hdfs://hadoop:9000"
-    var sourceDir = if (args.length > 1) args(1) else "/data/"
-    val sourceFile = if (args.length > 2) args(2) else "DelightingCustomersBDextract2.json"
-    var outputDir = if (args.length > 3) args(3) else "/results/"
-    val analisysList = if (args.length > 4) args.toList.drop(4) else List("default")
+    if (args.length < 3) throw new IllegalArgumentException("args(environment, commonConfig, *recommenderFiles)")
+
+    val environment = args(0) //
+    val commonConfigPath = args(1)
+    val analisysList = args.toList.drop(2)
+
+    val configCommons = JSON.parseFull(scala.io.Source.fromFile(commonConfigPath).mkString)
+    val configCommonsMap: Map[String, String] = configCommons match {
+      case Some(e: Map[String, String]@unchecked) => e
+      case _ => Map()
+    }
+
+    val fileSystemMode = configCommonsMap.getOrElse("fileSystemMode", "/data/") // "local" or "hdfs://hadoop:9000"
+    var sourceDir = configCommonsMap.getOrElse("sourceDir", "DelightingCustomersBDextract2.json")
+    val sourceFile = configCommonsMap.getOrElse("sourceFile", "/results/")
+    var outputDir = configCommonsMap.getOrElse("outputDir", "/results/")
+
 
     val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss"))
 
@@ -51,13 +63,23 @@ object ThesisAppLauncher {
 
     // Starting SparkSession
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
-    val spark = SparkSession.builder
-      .appName("ThesisAppLauncher")
-      .config("spark.executor.cores", "4")
-      .config("spark.executor.memory", "650m")
-      .config("spark.hadoop.dfs.replication", "1")
-      //            .master("local")
-      .getOrCreate()
+    val spark = if(environment == "hibrid"){
+      SparkSession.builder
+        .appName("ThesisAppLauncher")
+        .config("spark.executor.cores", "4")
+        .config("spark.executor.memory", "650m")
+        .config("spark.hadoop.dfs.replication", "1")
+        //            .master("local")
+        .getOrCreate()
+    } else if(environment == "hyperv") {
+      SparkSession.builder
+        .appName("ThesisAppLauncher")
+        .config("spark.executor.cores", "1")
+        .config("spark.executor.memory", "4g")
+        .config("spark.hadoop.dfs.replication", "1")
+                    .master("local")
+        .getOrCreate()
+    } else throw new IllegalArgumentException("illegal environment definition, please use 'hibrid' or 'hyperv'")
 
     // Loading formatted file as a dataframe table
     val flatTable = utilities.tableLoader(formattedFilePath, spark)
