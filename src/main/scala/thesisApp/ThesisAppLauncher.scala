@@ -17,7 +17,7 @@ object ThesisAppLauncher {
 
     if (args.length < 3) throw new IllegalArgumentException("args(environment, commonConfig, *recommenderFiles)")
 
-    val environment = args(0) //
+    val environment = args(0)
     val commonConfigPath = args(1)
     val analisysList = args.toList.drop(2)
 

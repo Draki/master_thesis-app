@@ -1,4 +1,4 @@
-{"fileSystemMode": "hdfs://hadoop:9000",
+{"fileSystemMode": "hdfs://hadoop-master:9000",
   "sourceDir": "/data/",
   "sourceFile": "DelightingCustomersBDextract2.json",
   "outputDir": "/results/"}
