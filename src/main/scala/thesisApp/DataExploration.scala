@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, Row}
 
 class DataExploration {
 
-  def dataExploration(appName:String, df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset): Unit = {
+  def dataExploration(appName: String, df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset): Unit = {
 
     val totals = df
       .agg(
@@ -17,7 +17,7 @@ class DataExploration {
       )
 
     val Row(totalItemsSold, totalDifferentItems, totalEarns, totalTransactions) = totals
-      .select("total_products_sold","total_different_products","total_earnings", "total_transactions").collect()(0)
+      .select("total_products_sold", "total_different_products", "total_earnings", "total_transactions").collect()(0)
     utilities.printFile(totals, resultsDir, appName + "_totals")
 
 
@@ -85,7 +85,7 @@ class DataExploration {
     utilities.printFile(gastoPorCompra, resultsDir, appName + "_clientsSpentMorePerTransaction")
 
     val productosPorCompra = totalsByClient
-        .groupBy("clientIndex")
+      .groupBy("clientIndex")
       .agg(bround(avg(col("amountOfProds") / col("transacOfClient")), 2).as("avgProdsPerTransac"))
       .orderBy(desc("avgProdsPerTransac"))
     utilities.printFile(productosPorCompra, resultsDir, appName + "_clientsMoreProdsPerTransaction")

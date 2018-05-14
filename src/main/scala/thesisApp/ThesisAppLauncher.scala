@@ -53,10 +53,10 @@ object ThesisAppLauncher {
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val spark = SparkSession.builder
       .appName("ThesisAppLauncher")
-      .config("spark.executor.cores","4")
-      .config("spark.executor.memory","650m")
-      .config("spark.hadoop.dfs.replication","1")
-//            .master("local")
+      .config("spark.executor.cores", "4")
+      .config("spark.executor.memory", "650m")
+      .config("spark.hadoop.dfs.replication", "1")
+      //            .master("local")
       .getOrCreate()
 
     // Loading formatted file as a dataframe table
@@ -70,11 +70,15 @@ object ThesisAppLauncher {
     for (analysisConf <- analisysList) {
 
       // Loading configuration from file or defaults
-      val configJson = if (analysisConf == "default") { "" }
-      else { JSON.parseFull(scala.io.Source.fromFile(analysisConf).mkString) }
+      val configJson = if (analysisConf == "default") {
+        ""
+      }
+      else {
+        JSON.parseFull(scala.io.Source.fromFile(analysisConf).mkString)
+      }
 
       val configMap: Map[String, String] = configJson match {
-        case Some(e: Map[String, String] @unchecked) => e
+        case Some(e: Map[String, String]@unchecked) => e
         case _ => Map()
       }
       val appName = configMap.getOrElse("appName", "DataExplorer")
@@ -105,14 +109,15 @@ object ThesisAppLauncher {
     }
 
   }
-  def dataExplorer(appName:String, df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset): String = {
+
+  def dataExplorer(appName: String, df: DataFrame, outputDir: String, utilities: UtilsCarrefourDataset): String = {
     val explorer = new DataExploration()
     explorer.dataExploration(appName, df, outputDir, utilities)
     appName
   }
 
 
-  def recommenderALS(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset, clientConverter:IndexToString, productConverter:IndexToString): String = {
+  def recommenderALS(appName: String, configMap: Map[String, String], df: DataFrame, outputDir: String, utilities: UtilsCarrefourDataset, clientConverter: IndexToString, productConverter: IndexToString): String = {
     // Loading configuration from file or defaults
     val usersCol = configMap.getOrElse("usersCol", "clientIndex")
     val itemsCol = configMap.getOrElse("itemsCol", "prodNameIndex")
@@ -126,8 +131,12 @@ object ThesisAppLauncher {
     )
 
     val cols = clientRecs.columns.toList
-    if (cols.contains("clientIndex")) { clientRecs = clientConverter.transform(clientRecs) }
-    if (cols.contains("prodNameIndex")) { clientRecs = productConverter.transform(clientRecs) }
+    if (cols.contains("clientIndex")) {
+      clientRecs = clientConverter.transform(clientRecs)
+    }
+    if (cols.contains("prodNameIndex")) {
+      clientRecs = productConverter.transform(clientRecs)
+    }
     val colDEIndexified = cols.map(x => x.replace("Index", ""))
 
     // Translate back elements and aggregate recommendations
@@ -141,7 +150,7 @@ object ThesisAppLauncher {
   }
 
 
-  def recommenderGraphD(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset): String = {
+  def recommenderGraphD(appName: String, configMap: Map[String, String], df: DataFrame, outputDir: String, utilities: UtilsCarrefourDataset): String = {
     // Loading configuration from file or defaults
     val vertexCol = configMap.getOrElse("vertexCol", "prodName")
     val edgeCol = configMap.getOrElse("edgeCol", "clientIndex")
@@ -157,7 +166,7 @@ object ThesisAppLauncher {
   }
 
 
-  def recommenderGraphX(appName:String, configMap: Map[String, String], df:DataFrame, outputDir:String, utilities:UtilsCarrefourDataset, spark:SparkSession): String = {
+  def recommenderGraphX(appName: String, configMap: Map[String, String], df: DataFrame, outputDir: String, utilities: UtilsCarrefourDataset, spark: SparkSession): String = {
     // Loading configuration from file or defaults
     val vertexCol = configMap.getOrElse("vertexCol", "prodNameIndex")
     val vertexPropertiesCol = configMap.getOrElse("vertexPropertiesCol", "prodName")

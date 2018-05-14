@@ -28,7 +28,7 @@ class UtilsCarrefourDataset() {
 
   def mkDirHDFS(dirPath: String): Unit = {
     val newFolder = new Path(prefixPath + dirPath)
-    if(!hdfs.exists(newFolder)) {
+    if (!hdfs.exists(newFolder)) {
       hdfs.mkdirs(newFolder)
     }
   }
