@@ -6,6 +6,7 @@ import org.apache.spark.sql.{DataFrame, Row}
 class DataExploration {
 
   def dataExploration(appName: String, df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset): Unit = {
+    println("\n\n------- Análisis global -------\n")
 
     val totals = df
       .agg(

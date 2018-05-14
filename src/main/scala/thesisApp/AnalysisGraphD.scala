@@ -7,6 +7,8 @@ class AnalysisGraphD {
 
   def analysisGraphD(df: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, dampingFactor: Double = 0.15, tolerance: Double = 0.01, maxIterations: Int = 10): Unit = {
 
+    println("\n\n------- Análisis de recomendación y descubrimiento basados en grafos (GraphD)-------\n")
+
     val Seq(vertexName, edgeName) = df.columns.toSeq
     val edgeGenerator = df.distinct()
 

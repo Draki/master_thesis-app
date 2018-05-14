@@ -9,6 +9,8 @@ class AnalysisGraphX {
 
   def analysisGraphX(dfVertex: DataFrame, dfEdgeGenerator: DataFrame, resultsDir: String, utilities: UtilsCarrefourDataset, spark: SparkSession, dampingFactor: Double = 0.85, tolerance: Double = 0.01): Unit = {
 
+    println("\n\n------- Análisis de recomendación y descubrimiento basados en grafos (GraphX)-------\n")
+
     val Seq(vertexIndex, vertexName) = dfVertex.columns.toSeq
     val Seq(vertexNameB, edgeName) = dfEdgeGenerator.columns.toSeq
 

@@ -104,7 +104,7 @@ object ThesisAppLauncher {
         case "RecommenderGraphX" => recommenderGraphX(appName, configMap, spartans, outputDir, utilities, spark)
         case _ => "WRONG CONFIG FILE FOR ANALYSIS: " + analysisConf
       }
-      println("utilities.timeLogger(" + saveName + ", " + numClients + ", " + numProds + ", " + timerModule + ", " + timeLogPath)
+      println("utilities.timeLogger(" + saveName + ", " + numClients + ", " + numProds + ", " + timerModule + ", " + timeLogPath + "\n")
       utilities.timeLogger(saveName, numClients, numProds, timerModule, timeLogPath)
     }
 

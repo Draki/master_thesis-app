@@ -8,7 +8,7 @@ import org.apache.spark.sql.functions._
 class AnalysisALS {
 
   def analisysALS(df: DataFrame): (DataFrame, Double) = {
-    println("\n\n>>> Análisis tipo recomendador basado en ALS\n")
+    println("\n\n------- Análisis tipo recomendador basado en ALS -------\n")
 
     println("Dividiendo el dataset en entrenamiento y prueba:")
     val Array(training, test) = df.toDF("user", "item", "rating").randomSplit(Array(0.8, 0.2))
