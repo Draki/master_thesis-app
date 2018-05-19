@@ -1,5 +1,5 @@
 {"appName": "RecommenderGraphD",
-  "outputMode": "parallelWriteJSON",
+  "outputMode": "standarOutput",
   "numClients": "5",
   "numProds": "5",
   "vertexCol": "prodName",

@@ -1,5 +1,5 @@
 {"appName": "RecommenderALS",
-  "outputMode": "parallelWriteJSON",
+  "outputMode": "standarOutput",
   "numClients": "10",
   "numProds": "10",
   "usersCol": "clientIndex",

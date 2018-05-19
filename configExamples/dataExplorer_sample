@@ -1,4 +1,5 @@
 {"appName": "DataExplorer",
-  "outputMode": "parallelWriteJSON",
+  "outputMode": "standarOutput",
   "numClients": "15",
   "numProds": "15"}
+
