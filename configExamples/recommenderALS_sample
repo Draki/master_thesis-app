@@ -1,7 +1,7 @@
 {"appName": "RecommenderALS",
-  "outputMode": "standarOutput",
-  "numClients": "10",
-  "numProds": "10",
+  "outputMode": "parallelWriteJSON",
+  "numClients": "30",
+  "numProds": "30",
   "usersCol": "clientIndex",
   "itemsCol": "prodNameIndex",
   "ratingsCol": "prodUds"}
